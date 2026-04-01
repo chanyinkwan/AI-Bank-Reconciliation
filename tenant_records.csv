@@ -1,0 +1,11 @@
+Tenant_Name,Property,Unit,Monthly_Rent,Start_Date,Reference_Pattern
+John Smith,14 Albion Road,Flat 4B,950.00,2024-03-01,FLAT-4B
+Priya Patel,14 Albion Road,Flat 2A,1100.00,2023-09-15,FLAT-2A
+David Williams,22 Crofton Lane,Unit 1,875.00,2024-01-01,CROFT-1
+Sarah O'Connor,22 Crofton Lane,Unit 3,875.00,2023-11-01,CROFT-3
+Mohammed Rahman,8 Beckenham Grove,Flat 6,1250.00,2024-06-01,BECK-6
+Claire Dubois,8 Beckenham Grove,Flat 2,1050.00,2023-07-01,BECK-2
+James Hartley,55 Westfield Avenue,Ground Floor,1400.00,2024-02-01,WEST-GF
+Anya Kowalski,55 Westfield Avenue,First Floor,1350.00,2024-04-01,WEST-1F
+Tom Fletcher,10 Riverside Court,Apt 9,925.00,2023-12-01,RIVER-9
+Fatima Al-Hassan,10 Riverside Court,Apt 3,980.00,2024-05-01,RIVER-3
