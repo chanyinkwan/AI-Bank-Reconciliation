@@ -4,7 +4,7 @@
 
 ## Client
 
-**Meridian Property Management** (anonymised) -- A London-based property management company overseeing 200+ residential rental units across South East England.
+**Mxxxxxx Property Management** (anonymised) -- A London-based property management company overseeing 200+ residential rental units across South East England.
 
 | Detail | Value |
 |--------|-------|
