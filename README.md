@@ -15,7 +15,7 @@
 
 ## The Problem
 
-Meridian's finance team manually reconciled bank statements against tenant records every month. The process involved:
+MPM's finance team manually reconciled bank statements against tenant records every month. The process involved:
 
 - Downloading CSV bank statements from their business account
 - Cross-referencing each transaction against tenant lease agreements
@@ -66,7 +66,7 @@ Bank Statement (CSV)
 
 - **Why an AI agent instead of rule-based matching?** Tenant names on bank transfers rarely match exactly (e.g., "J. Smith" vs "John Smith", reference numbers in wrong fields). The AI agent handles fuzzy matching that would require complex regex otherwise.
 - **Why structured output parsing?** The reconciliation report must be machine-readable for downstream processing. Structured output ensures consistent schema regardless of input variation.
-- **Why file-based trigger?** Meridian downloads statements manually from their bank portal. Automating the bank API integration was out of scope for Phase 1.
+- **Why file-based trigger?** MPM downloads statements manually from their bank portal. Automating the bank API integration was out of scope for Phase 1.
 
 ## Results
 
@@ -185,7 +185,7 @@ The agent processes each transaction and returns structured JSON:
 The first version sent the entire bank statement + all tenant records to GPT-4o in a single prompt. It worked for ~50 transactions but hallucinated matches above 100 rows (context window saturation). **Fix:** Switched to batch processing -- 20 transactions at a time, each with only the top-5 candidate tenant matches from a pre-filter step.
 
 ### CSV format hell
-Meridian's tenants paid from 4 different banks. Each bank exported CSVs with different column names, date formats, and encoding. Barclays used `DD/MM/YYYY`, Lloyds used `YYYY-MM-DD`, and one tenant's bank exported with BOM characters that broke the parser silently. **Fix:** Added a format detection node that normalises CSVs before feeding to the AI. Took 2 days of debugging to find the BOM issue.
+MPM's tenants paid from 4 different banks. Each bank exported CSVs with different column names, date formats, and encoding. Barclays used `DD/MM/YYYY`, Lloyds used `YYYY-MM-DD`, and one tenant's bank exported with BOM characters that broke the parser silently. **Fix:** Added a format detection node that normalises CSVs before feeding to the AI. Took 2 days of debugging to find the BOM issue.
 
 ### Fuzzy matching confidence threshold
 Initial threshold of 0.8 confidence missed ~12% of valid matches (tenants who put flat numbers in different formats: "Flat 2A" vs "2a" vs "F2A"). Lowering to 0.6 caught them but introduced false positives. **Fix:** Two-pass approach -- 0.8 threshold for auto-match, 0.6-0.8 goes to a "review queue" for human verification.
@@ -195,7 +195,7 @@ Two tenants set up standing orders twice. The system matched both payments to th
 
 ## Constraints & Trade-offs
 
-- **Why CSV file drop instead of bank API?** Meridian's bank (NatWest Business) charges for API access. CSV download is free and takes 2 minutes. Automating the bank connection wasn't worth the cost for their volume.
+- **Why CSV file drop instead of bank API?** MPM's bank (NatWest Business) charges for API access. CSV download is free and takes 2 minutes. Automating the bank connection wasn't worth the cost for their volume.
 - **Why Google Sheets output instead of a database?** The property managers live in Sheets. They rejected a dashboard prototype ("we just want it in the spreadsheet we already use"). Lesson: meet users where they are.
 - **Why not rule-based matching first?** We tried. Rules covered ~70% of cases. The remaining 30% had too many variations in payment references to codify. AI handles the long tail.
 
